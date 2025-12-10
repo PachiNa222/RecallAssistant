@@ -201,7 +201,7 @@ function renderMemories() {
             itemDiv.ondragstart = (e) => handleDragStart(e, { 
                 type: 'knowledge', 
                 name: item.name, 
-                relation: item.relation, // ← これが必要
+                relation: item.relation, 
                 id: item.id 
             });
 
@@ -385,6 +385,11 @@ function editThoughtName(index) {
 
 // ドラッグ開始時：データをJSON文字列にして転送用オブジェクトにセット
 function handleDragStart(e, data) {
+    // 【重要】イベントの伝播を止める。
+    // これがないと、知識(子)をドラッグしてもカテゴリ(親)のイベントも発火し、
+    // 親のデータ(カテゴリ名)で上書きされてしまいます。
+    e.stopPropagation(); 
+
     e.dataTransfer.setData('text/plain', JSON.stringify(data));
     e.dataTransfer.effectAllowed = 'copy'; // コピー操作であることを明示
 }
