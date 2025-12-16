@@ -1,4 +1,4 @@
-/* 基本定義は以前と同じ */
+/* 基本定義 */
 :root {
     --sidebar-width: 300px;
     --bg-color: #f4f5f7;
@@ -7,6 +7,7 @@
     --text-color: #333;
     --white: #ffffff;
     --danger-color: #e74c3c;
+    --io-color: #8e44ad; /* 共有機能用の色（紫） */
 }
 
 * { box-sizing: border-box; }
@@ -39,19 +40,22 @@ body {
     background: #fafafa;
 }
 
-/* ★追加：設定・テンプレートエリア */
+/* 設定エリア */
 .settings-area {
     padding: 10px;
     border-bottom: 1px solid var(--border-color);
     background: #f9f9f9;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px; /* 間隔を少し広げました */
+}
+.template-label {
+    font-size: 0.8em; color: #666; font-weight: bold; margin-bottom: 2px;
 }
 .template-control {
     display: flex; gap: 5px;
 }
-#template-id-input {
+#template-select {
     flex: 1; padding: 5px; font-size: 0.9em;
     border: 1px solid #ccc; border-radius: 3px;
 }
@@ -60,6 +64,19 @@ body {
     background: var(--primary-color); color: #fff;
     border: none; border-radius: 3px; font-size: 0.9em;
 }
+
+.template-actions {
+    display: flex; flex-direction: column; gap: 5px;
+}
+.action-btn {
+    padding: 5px; cursor: pointer;
+    background: #fff; color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    border-radius: 3px; font-size: 0.8em;
+    width: 100%;
+}
+.action-btn:hover { background: #e6f7ff; }
+
 .danger-btn {
     padding: 5px; cursor: pointer;
     background: #fff; color: var(--danger-color);
@@ -68,6 +85,27 @@ body {
     width: 100%;
 }
 .danger-btn:hover { background: #ffebeb; }
+
+/* ★追加：IO（書き出し・読み込み）ボタンのスタイル */
+.io-actions {
+    border-top: 1px dashed #ccc;
+    padding-top: 8px;
+}
+.io-buttons {
+    display: flex; gap: 5px;
+}
+.io-btn {
+    flex: 1;
+    padding: 5px; cursor: pointer;
+    background: #fff; color: var(--io-color);
+    border: 1px solid var(--io-color);
+    border-radius: 3px; font-size: 0.8em;
+}
+.io-btn:hover { background: #f4ecf7; }
+.io-btn:disabled {
+    color: #ccc; border-color: #ccc; cursor: not-allowed; background: #fff;
+}
+
 
 #memory-list {
     flex: 1; overflow-y: auto; padding: 10px;
