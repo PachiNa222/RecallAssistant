@@ -7,7 +7,7 @@
     --text-color: #333;
     --white: #ffffff;
     --danger-color: #e74c3c;
-    --io-color: #8e44ad; /* 共有機能用の色（紫） */
+    --io-color: #8e44ad;
 }
 
 * { box-sizing: border-box; }
@@ -40,17 +40,43 @@ body {
     background: #fafafa;
 }
 
-/* 設定エリア */
+/* 設定エリア全体 */
 .settings-area {
-    padding: 10px;
     border-bottom: 1px solid var(--border-color);
     background: #f9f9f9;
-    display: flex;
-    flex-direction: column;
-    gap: 10px; /* 間隔を少し広げました */
+    display: flex; flex-direction: column;
 }
+
+/* ★追加：開閉ヘッダー */
+.settings-header {
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #555;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f4f5f7;
+    user-select: none; /* 文字選択防止 */
+}
+.settings-header:hover {
+    background: #e0e0e0;
+}
+
+/* 中身のコンテンツ */
+#settings-content {
+    padding: 10px 15px;
+    border-top: 1px solid #ddd;
+    background: #fff;
+}
+
+.template-section {
+    display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px;
+}
+
 .template-label {
-    font-size: 0.8em; color: #666; font-weight: bold; margin-bottom: 2px;
+    font-size: 0.8em; color: #666; font-weight: bold;
 }
 .template-control {
     display: flex; gap: 5px;
@@ -86,10 +112,9 @@ body {
 }
 .danger-btn:hover { background: #ffebeb; }
 
-/* ★追加：IO（書き出し・読み込み）ボタンのスタイル */
+/* IO（書き出し・読み込み） */
 .io-actions {
-    border-top: 1px dashed #ccc;
-    padding-top: 8px;
+    margin-top: 5px;
 }
 .io-buttons {
     display: flex; gap: 5px;
