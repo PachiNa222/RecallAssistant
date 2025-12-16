@@ -29,6 +29,12 @@ const exportBtn = document.getElementById('export-btn');
 const importBtn = document.getElementById('import-btn');
 const importFileInput = document.getElementById('import-file-input');
 
+// ★メニュー開閉関連
+const settingsToggle = document.getElementById('settings-toggle');
+const settingsContent = document.getElementById('settings-content');
+const settingsIcon = document.getElementById('settings-icon');
+
+
 // --- 永続化（LocalStorage） ---
 
 function saveData() {
@@ -218,29 +224,25 @@ exportBtn.addEventListener('click', () => {
 
     if (!data) return alert("データが見つかりません");
 
-    // JSONデータをBlobオブジェクトに変換
     const jsonStr = JSON.stringify(data, null, 2);
     const blob = new Blob([jsonStr], { type: "application/json" });
     
-    // ダウンロードリンクを生成してクリックさせる
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = name + ".json"; // ファイル名
+    a.download = name + ".json";
     document.body.appendChild(a);
     a.click();
     
-    // 後始末
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 });
 
-// 2. 読み込み (Import) - ボタンクリックでinput発火
+// 2. 読み込み (Import)
 importBtn.addEventListener('click', () => {
     importFileInput.click();
 });
 
-// ファイルが選択されたら処理開始
 importFileInput.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -251,29 +253,23 @@ importFileInput.addEventListener('change', (e) => {
             const json = event.target.result;
             const data = JSON.parse(json);
             
-            // 簡易的なデータ構造チェック
             if (!Array.isArray(data)) {
                 throw new Error("データ形式が正しくありません（配列ではありません）");
             }
 
-            // ファイル名をテンプレート名として使う（拡張子を除く）
             let name = file.name.replace(/\.json$/i, "");
             
-            // 既に同名がある場合、確認またはリネーム
             if (customTemplates[name]) {
                 if (!confirm(`「${name}」というテンプレートは既に存在します。上書きしますか？`)) {
-                    // キャンセルの場合、名前を変更して登録を試みることも可能だが今回は中断
-                    importFileInput.value = ''; // リセット
+                    importFileInput.value = '';
                     return;
                 }
             }
 
-            // 保存
             customTemplates[name] = data;
             saveData();
             updateTemplateDropdown();
             
-            // 選択状態にする
             templateSelect.value = "custom:" + name;
             updateTemplateControls();
             
@@ -282,7 +278,6 @@ importFileInput.addEventListener('change', (e) => {
         } catch (err) {
             alert("ファイルの読み込みに失敗しました。\n" + err.message);
         }
-        // inputをリセット（同じファイルを再度選べるように）
         importFileInput.value = '';
     };
     reader.readAsText(file);
@@ -656,3 +651,19 @@ function handleDrop(e, thoughtIndex) {
         console.error("Drop error", err);
     }
 }
+
+// --- ★メニュー開閉ロジック ---
+settingsToggle.addEventListener('click', () => {
+    // 現在の表示状態をチェック
+    const isClosed = settingsContent.style.display === 'none';
+    
+    if (isClosed) {
+        // 開く
+        settingsContent.style.display = 'block';
+        settingsIcon.textContent = '▼'; // アイコンを下向きに
+    } else {
+        // 閉じる
+        settingsContent.style.display = 'none';
+        settingsIcon.textContent = '▶'; // アイコンを右向きに
+    }
+});
