@@ -4,12 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>思考整理ツール</title>
-    <link rel="stylesheet" href="styles.css" type="text/css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div id="sidebar">
         <div class="sidebar-header">記憶</div>
+        
+        <div class="settings-area">
+            <div class="template-control">
+                <input type="text" id="template-id-input" placeholder="テンプレートID (例: math)">
+                <button id="load-template-btn">読込</button>
+            </div>
+            <button id="clear-all-btn" class="danger-btn">全データ削除</button>
+        </div>
+
         <div id="memory-list"></div>
         <div class="add-btn-container">
             <button class="add-btn" id="add-memory-btn" title="記憶を追加">＋</button>
@@ -26,28 +35,26 @@
     <div id="modal-overlay">
         <div class="modal-box" id="memory-modal">
             <div class="modal-title">新規作成</div>
-            
             <div>
                 <label><input type="radio" name="createType" value="category" checked> カテゴリ</label>
                 <label><input type="radio" name="createType" value="knowledge"> 知識</label>
             </div>
-            
             <div id="input-category-group">
                 <input type="text" id="new-category-name" class="modal-input" placeholder="カテゴリ名">
             </div>
-
             <div id="input-knowledge-group" style="display:none;">
                 <select id="target-category-select" class="modal-select"></select>
                 <input type="text" id="new-knowledge-name" class="modal-input" placeholder="知識名" style="margin-top:5px;">
                 <input type="text" id="new-knowledge-relation" class="modal-input" placeholder="要素関係" style="margin-top:5px;">
             </div>
-
             <div class="modal-actions">
                 <button onclick="closeModal()">キャンセル</button>
                 <button onclick="saveMemory()">作成</button>
             </div>
         </div>
     </div>
-    <script src="script.js" async></script>
+
+    <script src="templates.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
